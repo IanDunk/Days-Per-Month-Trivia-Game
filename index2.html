@@ -50,12 +50,14 @@
             // Question
             $(".container").append(rowDiv + rowP + endDiv);
 
-            var formAction = "<form action='" + month + "'>";  // make sure form action is ok with having month instead of ""
-            var radioButton = "<input type='radio' name='" + month.toLowerCase() + "' value='ld-1'>";
+            var formAction = "<form id='" + month + "'>";  // make sure form action (now id) is ok with having month instead of ""
+            var radioButton1 = "<input type='radio' name='" + month.toLowerCase() + "' id='" + month.toLowerCase() + "-1" + "'>";
+            var radioButton2 = "<input type='radio' name='" + month.toLowerCase() + "' id='" + month.toLowerCase() + "-2" + "'>";
+            var radioButton3 = "<input type='radio' name='" + month.toLowerCase() + "' id='" + month.toLowerCase() + "-3" + "'>";
             var endFormAction = "</form>"
 
             // Radio buttons
-            $(".container").append(rowDiv + formAction + radioButton + " 28 " + radioButton + " 30 " + radioButton + " 31 " + endFormAction + endDiv);
+            $(".container").append(rowDiv + formAction + radioButton1 + " 28 " + radioButton2 + " 30 " + radioButton3 + " 31 " + endFormAction + endDiv);
 
         }
 
@@ -64,11 +66,22 @@
             makeQuestion(months[i]);
         }
 
-        $(document).ready(function () {
+        //$(document).ready(function () {
+        //
+        //    $("#january").css("color", "red");
+        //
+        //});
+/*
+        if(document.getElementById('january-1').checked === true) {
+            console.log("yes");
+        }else if(document.getElementById('january-1').checked) {
+            console.log("no");
+        }
+*/
 
-            $("#")
 
-        });
+
+
 
     </script>
 </body>
