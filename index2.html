@@ -40,7 +40,7 @@
         
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-        // Create a question using the month name and print to html with radio button options below
+        // Create a question taking in the month name and printing to html with question and radio button options below
         function makeQuestion(month) {
 
             var rowDiv = "<div class='row text-center'>";
@@ -66,22 +66,35 @@
             makeQuestion(months[i]);
         }
 
-        //$(document).ready(function () {
-        //
-        //    $("#january").css("color", "red");
-        //
-        //});
-/*
-        if(document.getElementById('january-1').checked === true) {
-            console.log("yes");
-        }else if(document.getElementById('january-1').checked) {
-            console.log("no");
+        function calculateScore() {
+            score = 0;
+
+            // Correct answers  (0 = 28, 1 = 30, 2 = 31)
+            if(document.getElementById('january-3').checked) { score++; }
+            if(document.getElementById('february-1').checked) { score++; }
+            if(document.getElementById('march-3').checked) { score++; }
+            if(document.getElementById('april-2').checked) { score++; }
+            if(document.getElementById('may-3').checked) { score++; }
+            if(document.getElementById('june-2').checked) { score++; }
+            if(document.getElementById('july-3').checked) { score++; }
+            if(document.getElementById('august-3').checked) { score++; }
+            if(document.getElementById('september-2').checked) { score++; }
+            if(document.getElementById('october-3').checked) { score++; }
+            if(document.getElementById('november-2').checked) { score++; }
+            if(document.getElementById('december-3').checked) { score++; }
+            return score;
         }
-*/
 
+        function questionsUnanswered() {
+            var unanswered = 0;
 
-
-
+            for(var i = 0; i < months.length; i++) {
+                if ($('input[name=' + months[i].toLowerCase() + ']:checked').length === 0) {
+                    unanswered++;
+                }
+            }
+            return unanswered;
+        }
 
     </script>
 </body>
