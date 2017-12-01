@@ -66,7 +66,7 @@
             makeQuestion(months[i]);
         }
 
-        function calculateScore() {
+        function calculateScore() {  // Turn into array and cycle through array SIDE NOTE!!
             score = 0;
 
             // Correct answers  (0 = 28, 1 = 30, 2 = 31)
@@ -95,6 +95,19 @@
             }
             return unanswered;
         }
+
+        function questionsWrong() {
+            return 12 - questionsUnanswered() - calculateScore();
+        }
+
+        // incorrect =  total questions - unanswered - correct answers
+
+        // example...
+        // 7 (correct)
+        // 12 (total) - 2 (unanswered) = 10
+        // 10 - 7 (correct) = 3 (wrong)
+
+
 
     </script>
 </body>
