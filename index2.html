@@ -20,7 +20,6 @@
 </head>
 
 <body>
-    <!-- <a href="index.html">About</a> -->
 
     <div class="container">
 
@@ -29,19 +28,55 @@
             <h1 class="text-center">
                 <strong>Do you Know your Days of the Year?</strong>
             </h1>
+            <h2 id="display"></h2>
         </div>
 
         <!-- End of container -->
     </div>
 
+    <!-- container for trivia game -->
     <div class="container" id="trivia-game"></div>
 
 
     <script>
         
+        // Month and Answer variables
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var correctAnswers = ["january-3", "february-1", "march-3", "april-2", "may-3", "june-2", "july-3", "august-3", "september-2", "october-3", "november-2", "december-3"];
 
-        function resetGame() {
+        // Interval
+        var intervalId;
+        var clockRunning = false;
+        var time = 30;
+
+
+
+        function start() {
+            if(!clockRunning) {
+                intervalId = setInterval(count, 1000);
+                clockRunning = true;
+            }
+        }
+
+        function count() {
+            if(time > 0) {
+                time--;
+                $("#display").text("Time Left: " + time);
+            } else {
+                clearInterval(intervalId);
+                endGame();
+            }
+        }
+
+        function endGame() {
+            //end game when cound goes to 0
+        }
+
+
+
+
+
+        function resetGame() {  // MIGHT CHANGE TO SET GAME AND RESET WILL GO TO PLAY AGAIN? --> AND RESET TIMER TO NEXT PAGE
             $("#trivia-game").html("");
 
             for(var i = 0; i < months.length; i++) {
@@ -71,8 +106,6 @@
 
         // Cycles through correct answers and sees if they're checked (clicked)
         function calculateScore() { 
-            
-            var correctAnswers = ["january-3", "february-1", "march-3", "april-2", "may-3", "june-2", "july-3", "august-3", "september-2", "october-3", "november-2", "december-3"];
             var score = 0;
 
             for(var i = 0; i < correctAnswers.length; i++) {
@@ -102,6 +135,8 @@
 
         // Initializing Game
         resetGame();
+
+        start(); // REPLACE WITH HOME PAGE BUTTON!!!!!
 
     </script>
 </body>
