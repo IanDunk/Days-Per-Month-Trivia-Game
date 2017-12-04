@@ -38,7 +38,7 @@
     <div class="container" id="trivia-game"></div>
 
     <!-- container for begin -->
-    <div class"container" id-"trivia-begin">
+    <div class"container" id="trivia-begin">
         <div class="row text-center">
             <p>Last days of the month quiz!</p>
             <button class="begin">Take Quiz</button>
@@ -99,6 +99,7 @@
             $("#trivia-loss").append(rowDiv + rowUnanswered + endDiv);
 
             $("#trivia-game").hide();
+            $("#trivia-begin").show();
             $("#trivia-loss").show();
         }
 
@@ -171,7 +172,7 @@
         }
 
         $(document).ready(function() {
-
+            // Initialize game when take quiz button clicked
             $(".begin").on("click", resetGame);
         });
 
