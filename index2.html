@@ -28,7 +28,7 @@
             <h1 class="text-center">
                 <strong>Do you Know your Days of the Year?</strong>
             </h1>
-            <h2 id="display"></h2>
+            <h2 class="text-center" id="display"></h2>
         </div>
 
         <!-- End of container -->
@@ -36,6 +36,19 @@
 
     <!-- container for trivia game -->
     <div class="container" id="trivia-game"></div>
+
+    <!-- container for begin -->
+    <div class"container" id-"trivia-begin">
+        <div class="row text-center">
+            <p>Last days of the month quiz!</p>
+            <button class="begin">Take Quiz</button>
+        </div>
+    </div>
+
+    <!-- container for loss -->
+    <div class="container" id="trivia-loss"></div>
+
+
 
 
     <script>
@@ -49,47 +62,71 @@
         var clockRunning = false;
         var time = 30;
 
+        // Divs for functions
+        var rowDiv = "<div class='row text-center'>";
+        var endDiv = "</div>";
+
 
 
         function start() {
             if(!clockRunning) {
-                intervalId = setInterval(count, 1000);
                 clockRunning = true;
+                intervalId = setInterval(count, 200);
             }
         }
 
         function count() {
             if(time > 0) {
                 time--;
-                $("#display").text("Time Left: " + time);
             } else {
                 clearInterval(intervalId);
+                clockRunning = false;
                 endGame();
             }
+            $("#display").text("Time Left: " + time);
         }
 
+
+        // Game ends when count equals 0
         function endGame() {
-            //end game when cound goes to 0
+            
+            var rowScore = "<p>You scored " + calculateScore() + " out of 12!</p>";
+            var rowWrong = "<p>Answers incorrect: " + questionsWrong() + "</p>";
+            var rowUnanswered = "<p>Questions unanswered: " + questionsUnanswered() + "</p>";
+
+            $("#trivia-loss").append(rowDiv + rowScore + endDiv);
+            $("#trivia-loss").append(rowDiv + rowWrong + endDiv);
+            $("#trivia-loss").append(rowDiv + rowUnanswered + endDiv);
+
+            $("#trivia-game").hide();
+            $("#trivia-loss").show();
         }
 
+        function resetGame() {
+            time = 30;
 
-
-
-
-        function resetGame() {  // MIGHT CHANGE TO SET GAME AND RESET WILL GO TO PLAY AGAIN? --> AND RESET TIMER TO NEXT PAGE
+            // Erasing html on page
+            $("#trivia-loss").html("");
             $("#trivia-game").html("");
 
+            // Repringing questions on page
             for(var i = 0; i < months.length; i++) {
                 makeQuestion(months[i]);
             }
+
+            // Swithcing displays to trivia game
+            $("#trivia-begin").hide();
+            $("#trivia-loss").hide();
+            $("#trivia-game").show();
+            $("#display").text("Time Left: " + time); // Needed to make it say 30 when game reset instead of 29
+
+            start();
         }
 
         // Create a question taking in the month name and printing to html with question and radio button options below
         function makeQuestion(month) {
 
-            var rowDiv = "<div class='row text-center'>";
             var rowP = "<p>What is the last day of " + month  + "?</p>";
-            var endDiv = "</div>";
 
             // Question
             $("#trivia-game").append(rowDiv + rowP + endDiv);
@@ -133,10 +170,11 @@
             return 12 - questionsUnanswered() - calculateScore();
         }
 
-        // Initializing Game
-        resetGame();
+        $(document).ready(function() {
 
-        start(); // REPLACE WITH HOME PAGE BUTTON!!!!!
+            $(".begin").on("click", resetGame);
+        });
+
 
     </script>
 </body>
