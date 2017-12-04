@@ -53,7 +53,7 @@
 
     <script>
         
-        // Month and Answer variables
+        // Month and Answer variables ** Able to add to each array for new question with answer on screen... if the world ever decides to adopt another month in its calendar
         var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         var correctAnswers = ["january-3", "february-1", "march-3", "april-2", "may-3", "june-2", "july-3", "august-3", "september-2", "october-3", "november-2", "december-3"];
 
@@ -67,41 +67,25 @@
         var endDiv = "</div>";
 
 
-
-        function start() {
+        // Begin Interval for count() every 1 second
+        function start() {                  // is clockRunning actually necessary in this case? Doesn't seem to have any use.
             if(!clockRunning) {
                 clockRunning = true;
                 intervalId = setInterval(count, 200);
             }
         }
 
+        // Time tracker, ends game if time's up. Displays time on jumbotron
         function count() {
             if(time > 0) {
                 time--;
             } else {
-                clearInterval(intervalId);
                 clockRunning = false;
                 endGame();
             }
             $("#display").text("Time Left: " + time);
         }
 
-
-        // Game ends when count equals 0
-        function endGame() {
-            
-            var rowScore = "<p>You scored " + calculateScore() + " out of 12!</p>";
-            var rowWrong = "<p>Answers incorrect: " + questionsWrong() + "</p>";
-            var rowUnanswered = "<p>Questions unanswered: " + questionsUnanswered() + "</p>";
-
-            $("#trivia-loss").append(rowDiv + rowScore + endDiv);
-            $("#trivia-loss").append(rowDiv + rowWrong + endDiv);
-            $("#trivia-loss").append(rowDiv + rowUnanswered + endDiv);
-
-            $("#trivia-game").hide();
-            $("#trivia-begin").show();
-            $("#trivia-loss").show();
-        }
 
         function resetGame() {
             time = 30;
@@ -117,32 +101,51 @@
 
             // Swithcing displays to trivia game
             $("#trivia-begin").hide();
-            $("#trivia-loss").hide();
+            // $("#trivia-loss").hide(); *** would this still be good practice to have in? hiding an empty element until it is used / filled / needed... it does shorten the code and doesn't seem to be needed.
             $("#trivia-game").show();
-            $("#display").text("Time Left: " + time); // Needed to make it say 30 when game reset instead of 29
+            $("#display").text("Time Left: " + time); // Needed to print 30 instead of 29 when game resets
 
             start();
         }
 
-        // Create a question taking in the month name and printing to html with question and radio button options below
+        // Displays score and clears interval
+        function endGame() {
+
+            clearInterval(intervalId);
+            
+            var rowScore = "<p>You scored " + calculateScore() + " out of " + months.length + "!</p>";
+            var rowWrong = "<p>Answers incorrect: " + questionsWrong() + "</p>";
+            var rowUnanswered = "<p>Questions unanswered: " + questionsUnanswered() + "</p>";
+
+            $("#trivia-loss").append(rowDiv + rowScore + endDiv);
+            $("#trivia-loss").append(rowDiv + rowWrong + endDiv);
+            $("#trivia-loss").append(rowDiv + rowUnanswered + endDiv);
+
+            $("#trivia-game").hide();
+            $("#trivia-begin").show();
+            $("#trivia-loss").show();
+        }   
+
+
+        // Create a question by taking in the month name and printing to html with radio buttons below
         function makeQuestion(month) {
 
             var rowP = "<p>What is the last day of " + month  + "?</p>";
 
-            // Question
+            // Appending Question
             $("#trivia-game").append(rowDiv + rowP + endDiv);
 
-            var formAction = "<form id='" + month + "'>";  // make sure form action (now id) is ok with having month instead of ""
+            var form = "<form id='" + month + "'>";
             var radioButton1 = "<input type='radio' name='" + month.toLowerCase() + "' id='" + month.toLowerCase() + "-1" + "'>";
             var radioButton2 = "<input type='radio' name='" + month.toLowerCase() + "' id='" + month.toLowerCase() + "-2" + "'>";
             var radioButton3 = "<input type='radio' name='" + month.toLowerCase() + "' id='" + month.toLowerCase() + "-3" + "'>";
-            var endFormAction = "</form>"
+            var endForm = "</form>"
 
-            // Radio buttons
-            $("#trivia-game").append(rowDiv + formAction + radioButton1 + " 28 " + radioButton2 + " 30 " + radioButton3 + " 31 " + endFormAction + endDiv);
+            // Appending Radio buttons
+            $("#trivia-game").append(rowDiv + form + radioButton1 + " 28 " + radioButton2 + " 30 " + radioButton3 + " 31 " + endForm + endDiv);
         }
 
-        // Cycles through correct answers and sees if they're checked (clicked)
+        // Calculate score by cycling through correct answers and seeing if the radio button with the equivalent id string is checked (clicked / active)
         function calculateScore() { 
             var score = 0;
 
@@ -154,7 +157,7 @@
             return score;
         }
 
-        // Unanswered Questions
+        // Similar to calculate score, but checks if any buttons by radio name have been checked
         function questionsUnanswered() {
             var unanswered = 0;
 
@@ -168,7 +171,7 @@
 
         // Incorrect Answers
         function questionsWrong() {
-            return 12 - questionsUnanswered() - calculateScore();
+            return months.length - questionsUnanswered() - calculateScore();
         }
 
         $(document).ready(function() {
