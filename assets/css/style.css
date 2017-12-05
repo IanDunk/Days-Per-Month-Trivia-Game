@@ -1,7 +1,28 @@
-.row {
-    padding: 10px;
+body {
+    background-image: url("../img/seasons.jpeg");
+    min-width: 600px;  /* temp fix for begin game header */
+}
+
+.jumbotron {
+    margin-top: 30px;
 }
 
 h2 {
     font-size: 32px;
+}
+
+p,
+.jumbotron,
+.row {
+    background: white;
+}
+
+.row {
+    padding: 10px;
+    width: 500px;             /* not working for begin game header */
+    margin: auto;
+}
+
+#trivia-game {
+    margin-bottom: 30px;
 }
