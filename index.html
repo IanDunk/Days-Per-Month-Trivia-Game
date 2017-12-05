@@ -80,7 +80,6 @@
                 time--;
             } else {
                 time--; // second time-- needed to end game on 0
-                clockRunning = false;
                 endGame();
             }
             $("#display").text("Time Left: " + time);
@@ -99,6 +98,9 @@
                 makeQuestion(months[i]);
             }
 
+            // Finish game early button with onclick activating endGame();
+            $("#trivia-game").append(rowDiv + "<button type='button' onclick='endGame()'>Finish</button>" + endDiv);
+
             // Swithcing displays to trivia game
             $("#trivia-begin").hide();
             // $("#trivia-loss").hide(); *** would this still be good practice to have in? hiding an empty element until it is used / filled / needed... it does shorten the code and doesn't seem to be needed.
@@ -111,6 +113,7 @@
         // Displays score and clears interval
         function endGame() {
 
+            clockRunning = false;
             clearInterval(intervalId);
             
             var rowScore = "<p>You scored " + calculateScore() + " out of " + months.length + "!</p>";
